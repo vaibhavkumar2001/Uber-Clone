@@ -1,3 +1,4 @@
+const blacklistTokenModal = require("../models/blacklistToken.modal");
 const userModel = require("../models/user.model");
 const userSchema = require("../models/user.model")
 const userService = require("../services/user.service")
@@ -57,4 +58,23 @@ module.exports.loginUser = async (req, res, next) => {
     res.cookie('token', token);
 
     res.status(200).json({ token, user });
+}
+
+// AB yahan Profile ke liye code likhna h mujhe
+module.exports.getUserProfile = async (req, res, next) => {
+
+    res.status(200).json(req.user);
+
+}
+
+module.exports.logoutUser = async (req, res, next) => {
+
+    // mujhe cookie ko bhi toh clear krna padega 
+    res.clearCookie('token');
+    const token = req.cookies.token || req.headers.authorization.split(' ')[1];
+
+    await blacklistTokenModal.create({token}) // yahan maine token ko blacklist krdiya h
+
+    res.status(200).json({ message: 'Logout successful' });
+
 }

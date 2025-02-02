@@ -142,3 +142,74 @@ curl -X POST http://localhost:3000/users/login \
   "password": "password123"
 }'
 ```
+
+# User Profile Endpoint
+
+## GET /users/profile
+
+### Description
+This endpoint is used to get the profile of the currently logged-in user. It requires the user to be authenticated.
+
+### Responses
+
+#### Success
+- **Status Code**: 200 OK
+- **Response Body**:
+  ```json
+  {
+    "_id": "string",
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string"
+  }
+  ```
+
+#### Error
+- **Status Code**: 401 Unauthorized
+- **Response Body**:
+  ```json
+  {
+    "message": "Unauthorized User"
+  }
+  ```
+
+### Example Request
+```bash
+curl -X GET http://localhost:3000/users/profile \
+-H "Authorization: Bearer <token>"
+```
+
+# User Logout Endpoint
+
+## GET /users/logout
+
+### Description
+This endpoint is used to log out the currently logged-in user. It requires the user to be authenticated.
+
+### Responses
+
+#### Success
+- **Status Code**: 200 OK
+- **Response Body**:
+  ```json
+  {
+    "message": "Logout successful"
+  }
+  ```
+
+#### Error
+- **Status Code**: 401 Unauthorized
+- **Response Body**:
+  ```json
+  {
+    "message": "Unauthorized User"
+  }
+  ```
+
+### Example Request
+```bash
+curl -X GET http://localhost:3000/users/logout \
+-H "Authorization: Bearer <token>"
+```
