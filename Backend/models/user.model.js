@@ -34,8 +34,9 @@ const userSchema = new mongoose.Schema({
 })
 
 /// ab mujhe user ke schema pe kuch Auth Methods lagana padega
-userSchema.methods.generateAuthToken = async function () {
-    const token = jwt.sign({_id: this._id }, process.env.JWT_SECRET)
+userSchema.methods.generateAuthToken = function () {
+    const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+    return token;
 }
 
 userSchema.methods.comparePassword = async function (password) {
