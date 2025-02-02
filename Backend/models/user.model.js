@@ -26,9 +26,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        select: false, // yeh isliye use kr rhe h kyoki jb bhi koi user request hoga tb password nhi jaayega
-        minlength: [8, "Password must be 8 characters long"],
-        maxlength: [20, "Password must be 20 characters long"],
+        select: false,
     },
     socketId: { // yeh islieye use kr rhe h kyonki yeh driver ki live location batane mein help karega
         type : String,
