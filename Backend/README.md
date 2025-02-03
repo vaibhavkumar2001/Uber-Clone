@@ -213,3 +213,98 @@ This endpoint is used to log out the currently logged-in user. It requires the u
 curl -X GET http://localhost:3000/users/logout \
 -H "Authorization: Bearer <token>"
 ```
+
+# Captain Registration Endpoint
+
+## POST /captains/register
+
+### Description
+This endpoint is used to register a new captain. It requires the captain's first name, last name, email, password, and vehicle details.
+
+### Request Body
+The request body should be a JSON object with the following structure:
+```json
+{
+  "fullname": {
+    "firstname": "string",
+    "lastname": "string"
+  },
+  "email": "string",
+  "password": "string",
+  "vehicle": {
+    "color": "string",
+    "plate": "string",
+    "capacity": "number",
+    "vehicleType": "string"
+  }
+}
+```
+
+### Validation
+- `email`: Must be a valid email address.
+- `fullname.firstname`: Must be at least 3 characters long.
+- `password`: Must be at least 6 characters long.
+- `vehicle.color`: Must be at least 3 characters long.
+- `vehicle.plate`: Must be at least 3 characters long.
+- `vehicle.capacity`: Must be at least 1.
+- `vehicle.vehicleType`: Must be one of 'car', 'motorcycle', 'auto'.
+
+### Responses
+
+#### Success
+- **Status Code**: 201 Created
+- **Response Body**:
+  ```json
+  {
+    "token": "string",
+    "captain": {
+      "_id": "string",
+      "fullname": {
+        "firstname": "string",
+        "lastname": "string"
+      },
+      "email": "string",
+      "vehicle": {
+        "color": "string",
+        "plate": "string",
+        "capacity": "number",
+        "vehicleType": "string"
+      }
+    }
+  }
+  ```
+
+#### Error
+- **Status Code**: 400 Bad Request
+- **Response Body**:
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "string",
+        "param": "string",
+        "location": "string"
+      }
+    ]
+  }
+  ```
+
+### Example Request
+```bash
+curl -X POST http://localhost:3000/captains/register \
+-H "Content-Type: application/json" \
+-d '{
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com",
+  "password": "password123",
+  "vehicle": {
+    "color": "red",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}'
+```
