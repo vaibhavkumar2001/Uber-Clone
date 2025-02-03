@@ -75,12 +75,15 @@ module.exports.getUserProfile = async (req, res, next) => {
 
 module.exports.logoutUser = async (req, res, next) => {
 
-    // mujhe cookie ko bhi toh clear krna padega 
-    res.clearCookie('token');
     const token = req.cookies.token || req.headers.authorization.split(' ')[1];
 
     await blacklistTokenModal.create({token}) // yahan maine token ko blacklist krdiya h
 
+
+    // mujhe cookie ko bhi toh clear krna padega 
+    res.clearCookie('token');
+
+    
     res.status(200).json({ message: 'Logout successful' });
 
 }
