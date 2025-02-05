@@ -226,19 +226,28 @@ The request body should be a JSON object with the following structure:
 ```json
 {
   "fullname": {
-    "firstname": "string", // Must be at least 3 characters long
+    "firstname": "string",
     "lastname": "string"
   },
-  "email": "string", // Must be a valid email address
-  "password": "string", // Must be at least 6 characters long
+  "email": "string",
+  "password": "string",
   "vehicle": {
-    "color": "string", // Must be at least 3 characters long
-    "plate": "string", // Must be at least 3 characters long
-    "capacity": "number", // Must be at least 1
-    "vehicleType": "string" // Must be one of 'car', 'motorcycle', 'auto'
+    "color": "string",
+    "plate": "string",
+    "capacity": "number",
+    "vehicleType": "string"
   }
 }
 ```
+
+### Validation
+- `email`: Must be a valid email address.
+- `fullname.firstname`: Must be at least 3 characters long.
+- `password`: Must be at least 6 characters long.
+- `vehicle.color`: Must be at least 3 characters long.
+- `vehicle.plate`: Must be at least 3 characters long.
+- `vehicle.capacity`: Must be at least 1.
+- `vehicle.vehicleType`: Must be one of 'car', 'motorcycle', 'auto'.
 
 ### Responses
 
@@ -298,157 +307,4 @@ curl -X POST http://localhost:3000/captains/register \
     "vehicleType": "car"
   }
 }'
-```
-
-# Captain Login Endpoint
-
-## POST /captains/login
-
-### Description
-This endpoint is used to log in an existing captain. It requires the captain's email and password.
-
-### Request Body
-The request body should be a JSON object with the following structure:
-```json
-{
-  "email": "string", // Must be a valid email address
-  "password": "string" // Must be at least 6 characters long
-}
-```
-
-### Responses
-
-#### Success
-- **Status Code**: 200 OK
-- **Response Body**:
-  ```json
-  {
-    "token": "string",
-    "captain": {
-      "_id": "string",
-      "fullname": {
-        "firstname": "string",
-        "lastname": "string"
-      },
-      "email": "string",
-      "vehicle": {
-        "color": "string",
-        "plate": "string",
-        "capacity": "number",
-        "vehicleType": "string"
-      }
-    }
-  }
-  ```
-
-#### Error
-- **Status Code**: 400 Bad Request
-- **Response Body**:
-  ```json
-  {
-    "errors": [
-      {
-        "msg": "string",
-        "param": "string",
-        "location": "string"
-      }
-    ]
-  }
-  ```
-
-- **Status Code**: 401 Unauthorized
-- **Response Body**:
-  ```json
-  {
-    "message": "Invalid email or password"
-  }
-  ```
-
-### Example Request
-```bash
-curl -X POST http://localhost:3000/captains/login \
--H "Content-Type: application/json" \
--d '{
-  "email": "john.doe@example.com",
-  "password": "password123"
-}'
-```
-
-# Captain Profile Endpoint
-
-## GET /captains/profile
-
-### Description
-This endpoint is used to get the profile of the currently logged-in captain. It requires the captain to be authenticated.
-
-### Responses
-
-#### Success
-- **Status Code**: 200 OK
-- **Response Body**:
-  ```json
-  {
-    "captain": {
-      "_id": "string",
-      "fullname": {
-        "firstname": "string",
-        "lastname": "string"
-      },
-      "email": "string",
-      "vehicle": {
-        "color": "string",
-        "plate": "string",
-        "capacity": "number",
-        "vehicleType": "string"
-      }
-    }
-  }
-  ```
-
-#### Error
-- **Status Code**: 401 Unauthorized
-- **Response Body**:
-  ```json
-  {
-    "message": "Unauthorized User"
-  }
-  ```
-
-### Example Request
-```bash
-curl -X GET http://localhost:3000/captains/profile \
--H "Authorization: Bearer <token>"
-```
-
-# Captain Logout Endpoint
-
-## GET /captains/logout
-
-### Description
-This endpoint is used to log out the currently logged-in captain. It requires the captain to be authenticated.
-
-### Responses
-
-#### Success
-- **Status Code**: 200 OK
-- **Response Body**:
-  ```json
-  {
-    "message": "Logout successful"
-  }
-  ```
-
-#### Error
-- **Status Code**: 401 Unauthorized
-- **Response Body**:
-  ```json
-  {
-    "message": "Unauthorized User"
-  }
-  ```
-
-### Example Request
-```bash
-curl -X GET http://localhost:3000/captains/logout \
--H "Authorization: Bearer <token>"
 ```
